@@ -86,14 +86,29 @@ button{font-size:1.22rem;font-weight:650}
 @media(prefers-reduced-motion:reduce){.branch[data-hint],#measure[data-hint]{animation:none}}
 #measure-hint{color:#754610}
 .board-bottom{flex-wrap:wrap}
+.sing-word{color:inherit;background:linear-gradient(transparent 45%,#ffdf78 45% 88%,transparent 88%);padding:0 .025em}
+.story{margin-top:2.5rem;font-size:1.25rem;line-height:1.45}
+.story h2,.story h3{line-height:1.15;margin:1.2em 0 .3em}
+.story p{margin:.35em 0 1em}
+.story a{color:inherit;text-underline-offset:.16em}
 </style>
 </head>
 <body><main>
-<header><div class="eyebrow">The quantum songbook / No. 01</div><h1>Superposingtion</h1><p>Ten seconds of singing. Many ways to hear it.</p></header>
+<header><div class="eyebrow">The quantum songbook / No. 01</div><h1>Superpo<mark class="sing-word">sing</mark>tion</h1><p>Ten seconds of singing. Many ways to hear it.</p></header>
 <div class="bar"><button class="primary" id="record"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5c0-4 6-4 6 0v6c0 4-6 4-6 0zM6 10c0 9 12 9 12 0M12 17v4m-3 0h6"/></svg><span id="record-label">SING</span></button><span class="meter" id="clock">10.0 s</span><button id="sample">Play Haha’s sample</button><span class="sample-credit">by Haha</span></div>
 <p role="status" id="status">Your microphone recording stays in this browser.</p>
 <section class="board" aria-label="Voice workspace"><div class="board-top"><span>Tap a voice to split it into superposition</span><span id="count">0 / 15 voices</span><button id="measure" disabled>Measure</button></div><p id="measure-hint" hidden>Tap Measure to collapse the superposition.</p><div id="rows"></div><div class="board-bottom"><button id="play" disabled>▶ Loop</button><button id="download" disabled>Download WAV</button><button id="share">Share site</button><span id="position">0.00 / 10.00 s</span></div></section>
-<p class="note">Splitting a voice is our musical picture of quantum superposition: one state branches into several possibilities. Measurement picks one outcome using the percentages as probabilities.</p>
+<section class="note story" aria-labelledby="story-title">
+<h2 id="story-title">Hi! This is Haha</h2>
+<p>Quantum Chess got me wondering what else we could play with to understand superposition and measurement. I landed on something you can hear: your own voice.</p>
+<h3>One voice, many possibilities</h3>
+<p>In quantum physics, a state can be a combination of several possible outcomes. That’s a superposition. Try splitting your melody here. The two new voices each get half their parent’s weight, and you can hear them together. The percentages set their volumes in this demo.</p>
+<h3>What happens when you measure?</h3>
+<p>A quantum measurement gives one outcome. The state determines how likely each outcome is. Here, <strong>Measure</strong> picks one voice using the same percentages and brings it back to full volume. A voice marked 25% has a one-in-four chance of being the one you hear afterward.</p>
+<p>Sound is our analogy. Real quantum states also carry phase, which lets possibilities interfere and change the odds.</p>
+<h3>Why is Einstein following your mouse?</h3>
+<p>I drew him by hand just for this site. Einstein questioned whether quantum mechanics gave a complete picture of reality, and I like having that curiosity follow you around as you play. <a href="https://doi.org/10.1103/PhysRev.47.777">Read the 1935 paper</a>.</p>
+</section>
 </main><dialog id="limit"><strong>Fifteen voices is the limit</strong><p>Measure to return to one voice, then split again.</p><form method="dialog"><button autofocus>Got it</button></form></dialog><div id="screen-effect" aria-hidden="true"></div><div id="einstein" aria-hidden="true"></div>
 <script>
 'use strict';
