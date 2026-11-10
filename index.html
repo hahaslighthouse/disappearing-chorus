@@ -1,29 +1,107 @@
 <!doctype html>
-<html lang="zh-Hans">
+<html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>消失的副歌</title>
-<meta name="description" content="唱一段旋律，分裂成十五条声部，再用一次测量让它回到独唱。">
+<title>Superposingtion</title>
+<meta name="description" content="A quantum-inspired voice sketchbook. Sing, split your voice, and measure what remains.">
 <style>
-:root{color-scheme:dark;--bg:#12100f;--ink:#f4eade;--muted:#bfb0a3;--line:#453b36;--paper:#211b19;--accent:#ffbe94;font-family:system-ui,sans-serif}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink)}main{max-width:980px;margin:auto;padding:clamp(22px,5vw,62px) clamp(16px,4vw,42px)}header{border-top:1px solid var(--accent);padding-top:20px}.eyebrow{color:var(--accent);font-size:.75rem;letter-spacing:.2em}h1{font-family:Georgia,"Songti SC",serif;font-size:clamp(2.6rem,8vw,5.8rem);font-weight:500;margin:.2em 0 .12em;line-height:1.12}p{color:var(--muted);line-height:1.6;margin:.5em 0 1em}button{font:inherit;cursor:pointer;color:var(--ink);background:#29221f;border:1px solid var(--line);padding:.65em 1em;border-radius:9px}button:hover:not(:disabled){border-color:var(--accent)}button:disabled{opacity:.48;cursor:default}button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}.primary{background:var(--accent);color:#251611;border-color:transparent;font-weight:700}.bar{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin:16px 0}.meter{width:5em;font-variant-numeric:tabular-nums;color:var(--accent)}#status{min-height:1.5em;font-size:.88rem}.board{border:1px solid var(--line);border-radius:16px;background:var(--paper);overflow:hidden}.board-top,.board-bottom{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;padding:12px 16px;font-size:.8rem;letter-spacing:.06em;color:var(--muted)}.board-top{border-bottom:1px solid var(--line)}.board-bottom{border-top:1px solid var(--line)}#rows{max-height:min(55vh,530px);overflow-y:auto}.row{display:grid;grid-template-columns:clamp(95px,20vw,155px) minmax(0,1fr);align-items:center;min-height:65px;border-bottom:1px solid #332a27;transition:opacity .35s,transform .35s}.row:last-child{border-bottom:0}.branch{display:grid;grid-template-columns:54px 1fr;align-items:center;text-align:left;padding:4px 6px;min-height:60px;background:transparent;border-color:transparent;gap:4px}.dot{width:var(--size);height:var(--size);display:block;background:var(--voice);border-radius:50%;justify-self:center;box-shadow:0 0 18px color-mix(in srgb,var(--voice),transparent 76%)}.tag{font-variant-numeric:tabular-nums;font-weight:700;font-size:.83rem}.pitch{display:block;font-size:.67rem;font-weight:400;color:var(--muted)}canvas{width:100%;height:64px;display:block;border-left:1px solid var(--line)}.vanish{opacity:0;transform:scale(.74)}.chosen{background:#382b24;transform:scale(1.015)}.reveal{animation:appear .35s ease-out}@keyframes appear{from{opacity:.2;transform:scale(.96)}to{opacity:1;transform:none}}.note{font-size:.85rem;max-width:68ch;margin-top:20px}dialog{max-width:min(360px,90vw);background:var(--paper);color:var(--ink);border:1px solid var(--line);border-radius:14px;padding:20px}dialog::backdrop{background:#0009}
+:root{color-scheme:light;--paper:#fbf8f0;--ink:#282621;--muted:#665f54;--line:#bcb2a0;--wash:#eee7d8;--mark:#f4d881;font-family:system-ui,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink)}
+main{max-width:920px;margin:auto;padding:clamp(24px,5vw,66px) clamp(16px,5vw,48px)}
+header{position:relative;padding-bottom:20px}
+.eyebrow{font-family:Georgia,serif;color:var(--muted);font-style:italic;font-size:.84rem;letter-spacing:.14em}
+h1{display:inline-block;position:relative;font-family:"Songti SC","Noto Serif CJK SC",Georgia,serif;font-size:clamp(2.65rem,8vw,5.4rem);font-weight:600;line-height:1.1;margin:.25em 0 .2em;letter-spacing:-.06em;isolation:isolate}
+h1:after{content:"";position:absolute;z-index:-1;left:-.06em;right:-.09em;height:.18em;bottom:.04em;background:var(--mark);border-radius:20% 65% 36% 14%;transform:rotate(-2deg)}
+p{margin:.5em 0 1em;color:var(--muted);line-height:1.65}
+button{font:inherit;cursor:pointer;color:var(--ink);background:transparent;border:1px solid var(--line);border-radius:10px 13px 9px 12px;padding:.62em .95em}
+button:hover:not(:disabled){background:var(--wash);border-color:var(--ink)}
+button:disabled{opacity:.48;cursor:default}
+button:focus-visible{outline:2px solid #6d4c35;outline-offset:3px}
+.primary{display:inline-flex;align-items:center;gap:.6em;background:var(--mark);border-color:var(--ink);font-weight:700;box-shadow:2px 2px 0 var(--ink)}
+.primary svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.bar{display:flex;align-items:center;flex-wrap:wrap;gap:10px 14px;margin:4px 0 0}
+.sample-credit{font-size:.77rem;color:var(--muted);white-space:nowrap}
+.meter,#position{font-variant-numeric:tabular-nums}
+.meter{font-size:.85rem;color:var(--muted)}
+#status{min-height:1.5em;font-size:.85rem;margin:14px 0}
+.board{border:1px solid var(--ink);border-radius:14px 9px 13px 8px;background:#fffdf7;box-shadow:3px 3px 0 var(--wash);overflow:hidden}
+.board-top,.board-bottom{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;padding:10px 13px;font-size:.82rem;color:var(--muted)}
+.board-top{border-bottom:1px dashed var(--line)}
+.board-bottom{border-top:1px dashed var(--line)}
+#rows{min-height:75px;max-height:min(55vh,530px);overflow-y:auto;background:repeating-linear-gradient(to bottom,transparent 0 15px,#e6dec855 15px 16px)}
+#rows:empty:before{content:"A blank score. Sing, or try the sample.";display:block;margin:25px 16px;color:var(--muted);font-size:.85rem}
+.row{display:grid;grid-template-columns:clamp(96px,22vw,154px) minmax(0,1fr);align-items:center;min-height:64px;border-bottom:1px solid #e8e0d0;transition:opacity .35s ease,transform .35s ease}
+.row:last-child{border-bottom:0}
+.branch{display:grid;grid-template-columns:52px 1fr;align-items:center;text-align:left;min-height:60px;padding:4px 5px;gap:5px;border-color:transparent}
+.dot{width:var(--size);height:var(--size);display:block;justify-self:center;background:color-mix(in srgb,var(--voice) 25%,#fffdf7);outline:1.4px solid var(--voice);border-radius:47% 53% 51% 49% / 54% 46% 54% 46%;transform:rotate(-9deg)}
+.tag{font-variant-numeric:tabular-nums;font-weight:700;font-size:.83rem}
+.pitch{display:block;font-size:.69rem;font-weight:400;color:var(--muted)}
+canvas{width:100%;height:64px;display:block;border-left:1px dashed var(--line)}
+.vanish{opacity:0;transform:translateX(14px) scale(.96)}
+.chosen{background:#f6edcf}
+.reveal{animation:draw-in .36s ease-out}
+@keyframes draw-in{from{opacity:.25;transform:translateX(-7px)}to{opacity:1;transform:none}}
+.note{font-size:.83rem;max-width:68ch;margin:21px 0 0}
+dialog{max-width:min(360px,90vw);background:var(--paper);color:var(--ink);border:1px solid var(--ink);border-radius:12px 8px 14px 10px;padding:20px}
+dialog::backdrop{background:#352c2355}
 @media(prefers-reduced-motion:reduce){.row{transition:none}.reveal{animation:none}}
+@font-face{font-family:Caveat;src:url('./caveat.ttf') format('truetype');font-weight:400 700;font-display:swap}
+:root{font-family:Caveat,cursive}
+h1,.eyebrow{font-family:inherit}
+h1{letter-spacing:-.045em;font-size:clamp(3.4rem,12vw,8rem);font-weight:700}
+header p{font-size:clamp(1.2rem,3vw,1.55rem)}
+.eyebrow{font-size:1.04rem;letter-spacing:.12em}
+button{font-size:1.22rem;font-weight:650}
+.sample-credit,.meter,.board-top,.board-bottom,.tag,#status,.note,#rows:empty:before{font-size:1.07rem}
+.pitch{font-size:.91rem}
+.bar{column-gap:17px}
+.primary{position:relative;font-size:1.65rem;padding:.32em .85em;transform:rotate(-3deg);box-shadow:3px 4px 0 var(--ink);transition:transform .19s cubic-bezier(.2,1.5,.4,1),box-shadow .19s;background:#ffe28b}
+.primary:hover:not(:disabled){transform:rotate(1deg) translateY(-3px);background:#ffea9d;box-shadow:5px 7px 0 var(--ink)}
+.primary:active:not(:disabled){transform:rotate(-1deg) translateY(3px);box-shadow:1px 1px 0 var(--ink)}
+.primary::after{content:"✧";position:absolute;right:-.55em;top:-.5em;font-size:1.12em;color:#9e492a;pointer-events:none;animation:twinkle 2.4s ease-in-out infinite}
+.primary[data-recording="true"]{background:#ffcbb4}
+.primary[data-recording="true"]::after{content:"●";animation-duration:.8s}
+#measure{transform:rotate(1.2deg)}
+#measure:not(:disabled):hover{background:#eadcf4}
+.row{transition:opacity .35s ease,transform .35s cubic-bezier(.25,.85,.4,1)}
+.vanish{opacity:0;transform:translateX(30px) scale(.88) rotate(1deg)}
+.chosen{animation:chosen .35s ease-out;background:#f9eab8}
+@keyframes chosen{50%{transform:scale(1.015);background:#ffe28b}}
+@keyframes twinkle{50%{transform:rotate(22deg) scale(1.22)}}
+.ink-spark{position:fixed;z-index:1001;pointer-events:none;color:#a34a36;font-size:22px;animation:spark .5s ease-out forwards}
+@keyframes spark{to{opacity:0;transform:translate(var(--dx),var(--dy)) rotate(28deg) scale(.4)}}
+#screen-effect{position:fixed;inset:0;z-index:1000;pointer-events:none;overflow:hidden}
+.screen-shape{position:absolute;left:var(--x);top:var(--y);width:var(--diameter);aspect-ratio:1;
+ border:clamp(3px,1vmin,10px) solid var(--ink);border-radius:50%;transform-origin:center;box-sizing:border-box}
+.screen-shape.ribbon{border-radius:12%;background:var(--ink)}
+#einstein{display:none;position:fixed;top:0;left:0;z-index:1002;width:46px;height:42px;pointer-events:none;
+ background:url('./einstein-sketch.jpg') -21px -9px / 96px auto no-repeat;
+ clip-path:polygon(4% 31%,25% 4%,59% 0,81% 12%,99% 48%,93% 83%,73% 90%,61% 100%,34% 92%,10% 83%,0 65%);
+ filter:invert(1) grayscale(1) contrast(1.65);mix-blend-mode:multiply}
+@media(pointer:fine){body.ink-cursor,body.ink-cursor *{cursor:none!important}body.ink-cursor #einstein{display:block}}
+@media(prefers-reduced-motion:reduce){.primary::after,.chosen,.ink-spark{animation:none}.ink-spark{display:none}.primary{transition:none}}
+.branch[data-hint],#measure[data-hint]{background:#ffe6a0;outline:2px dashed #9b6316;outline-offset:3px;animation:nudge 1.4s ease-in-out 3}
+@keyframes nudge{50%{outline-offset:7px}}
+@media(prefers-reduced-motion:reduce){.branch[data-hint],#measure[data-hint]{animation:none}}
+#measure-hint{color:#754610}
+.board-bottom{flex-wrap:wrap}
 </style>
 </head>
 <body><main>
-<header><div class="eyebrow">VOICE LAB / 01</div><h1>消失的副歌</h1><p>唱十秒。让一条旋律分成和声，再看看测量会留下谁。</p></header>
-<div class="bar"><button class="primary" id="record">◉ 开始录音</button><button id="sample">试用示例旋律</button><span class="meter" id="clock">10.0 秒</span></div>
-<p role="status" id="status">录音只在当前浏览器内处理。</p>
-<section class="board" aria-label="声部工作区"><div class="board-top"><span>声部 · 点击分裂</span><span id="count">0 / 15 轨</span><button id="measure" disabled>Measurement · 测量</button></div><div id="rows"></div><div class="board-bottom"><button id="play" disabled>▶ 循环播放</button><span id="position">0.00 / 10.00 秒</span></div></section>
-<p class="note">每次分裂把权重和音量增益各平分。测量按权重随机保留一轨，并将它恢复到 100%。这是叠加与测量的声音类比。声部实际同时播放，音量和百分比也不能直接等同于真实量子系统的振幅与概率。</p>
-</main><dialog id="limit"><strong>最多支持 15 个声部</strong><p>可以先测量，让它回到一个声部，再重新分裂。</p><form method="dialog"><button autofocus>知道了</button></form></dialog>
+<header><div class="eyebrow">The quantum songbook / No. 01</div><h1>Superposingtion</h1><p>Ten seconds of singing. Many ways to hear it.</p></header>
+<div class="bar"><button class="primary" id="record"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5c0-4 6-4 6 0v6c0 4-6 4-6 0zM6 10c0 9 12 9 12 0M12 17v4m-3 0h6"/></svg><span id="record-label">SING</span></button><span class="meter" id="clock">10.0 s</span><button id="sample">Play Haha’s sample</button><span class="sample-credit">by Haha</span></div>
+<p role="status" id="status">Your microphone recording stays in this browser.</p>
+<section class="board" aria-label="Voice workspace"><div class="board-top"><span>Tap a voice to split it into superposition</span><span id="count">0 / 15 voices</span><button id="measure" disabled>Measure</button></div><p id="measure-hint" hidden>Tap Measure to collapse the superposition.</p><div id="rows"></div><div class="board-bottom"><button id="play" disabled>▶ Loop</button><button id="download" disabled>Download WAV</button><button id="share">Share site</button><span id="position">0.00 / 10.00 s</span></div></section>
+<p class="note">Splitting a voice is our musical picture of quantum superposition: one state branches into several possibilities. Measurement picks one outcome using the percentages as probabilities.</p>
+</main><dialog id="limit"><strong>Fifteen voices is the limit</strong><p>Measure to return to one voice, then split again.</p><form method="dialog"><button autofocus>Got it</button></form></dialog><div id="screen-effect" aria-hidden="true"></div><div id="einstein" aria-hidden="true"></div>
 <script>
 'use strict';
 const $=id=>document.getElementById(id);
 // Establish a minor triad first, then add color tones and wider registers.
 const offsets=[0,3,-5,7,-2,-9,2,-10,10,-7,5,-14,14,15,-17];
 const maxVoices=offsets.length;
-const colors=['#ffbb91','#8edac8','#c3adff','#f3d577','#f5a1bd','#8abaff','#d6e591','#f19a78','#73b6f6','#df94e7','#a8d88c','#d9a86e','#6dc5b5','#c0a4ed','#f4d4a4'];
+const colors=['#a34a36','#287c6d','#714f9e','#8b6509','#ad4e78','#37679e','#62772b','#b85d33','#337b9c','#88447f','#497347','#8f6143','#326f79','#665ca7','#a27023'];
 const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
 let context,buffers=[],peaks=[],voices=[],running=false,busy=false,measuring=false,started=0,paused=0,duration=10,active=new Map(),nextId=0;
 let recorder,recordTimer,recordTick;
@@ -31,17 +109,30 @@ function say(message){$('status').textContent=message;}
 async function audio(){context??=new (window.AudioContext||window.webkitAudioContext)();await context.resume();return context;}
 function phase(now=context?.currentTime||0){return ((running?now-started:paused)%duration+duration)%duration;}
 function controls(){
+ $('record').dataset.recording=String(recorder?.state==='recording');
  $('play').disabled=busy||!voices.length||measuring;
  $('measure').disabled=busy||voices.length<2||measuring;
+ const showMeasureHint=voices.length>=4&&!$('measure').disabled;
+ $('measure').toggleAttribute('data-hint',showMeasureHint);
+ $('measure-hint').hidden=!showMeasureHint;
+ $('download').disabled=busy||measuring||!voices.length;
  $('record').disabled=(busy&&recorder?.state!=='recording')||measuring;
  $('sample').disabled=busy||measuring;
- $('count').textContent=voices.length+' / '+maxVoices+' 轨';
- $('play').textContent=running?'❚❚ 暂停':'▶ 循环播放';
+ $('count').textContent=voices.length+' / '+maxVoices+' voices';
+ $('play').textContent=running?'❚❚ Pause':'▶ Loop';
 }
 function stopVoice(v,t){
  v.gain.gain.cancelScheduledValues(t);
  v.gain.gain.setTargetAtTime(0,t,.007);
  v.source.stop(t+.055);
+}
+function connectVoice(ctx,source,gain,voice){
+ source.connect(gain);
+ if(ctx.createStereoPanner){
+  const panner=ctx.createStereoPanner(),semitones=offsets[voice.slot];
+  panner.pan.value=Math.sign(semitones)*Math.min(.48,Math.abs(semitones)*.032);
+  gain.connect(panner).connect(ctx.destination);
+ }else gain.connect(ctx.destination);
 }
 function sync(){
  if(!running)return;
@@ -53,12 +144,7 @@ function sync(){
   const source=context.createBufferSource(),gain=context.createGain();
   source.buffer=buffers[v.slot];source.loop=true;
   gain.gain.setValueAtTime(0,t);gain.gain.linearRampToValueAtTime(v.p*.88,t+.025);
-  source.connect(gain);
-  if(context.createStereoPanner){
-   const panner=context.createStereoPanner(),semitones=offsets[v.slot];
-   panner.pan.value=Math.sign(semitones)*Math.min(.48,Math.abs(semitones)*.032);
-   gain.connect(panner).connect(context.destination);
-  }else gain.connect(context.destination);
+  connectVoice(context,source,gain,v);
   source.start(t,phase(t));active.set(v.id,{source,gain});
  }
 }
@@ -69,8 +155,9 @@ function stop(){
 function row(v){
  const el=document.createElement('div');el.className='row reveal';el.dataset.id=v.id;
  const button=document.createElement('button');button.className='branch';
+ if(v.p===1)button.dataset.hint='';
  button.style.setProperty('--voice',colors[v.slot]);button.style.setProperty('--size',(52*v.p)+'px');
- button.setAttribute('aria-label','分裂 '+(100*v.p)+'% '+pitch(v.slot));
+ button.setAttribute('aria-label','Split '+(100*v.p)+'% '+pitch(v.slot));
  const dot=document.createElement('span');dot.className='dot';dot.setAttribute('aria-hidden','true');
  const label=document.createElement('span');label.className='tag';label.textContent=(100*v.p)+'%';
  const sub=document.createElement('span');sub.className='pitch';sub.textContent=pitch(v.slot);
@@ -78,7 +165,7 @@ function row(v){
  const canvas=document.createElement('canvas');canvas.setAttribute('aria-hidden','true');el.append(button,canvas);
  return el;
 }
-function pitch(slot){const s=offsets[slot];return s===0?'原声':(s>0?'+':'−')+Math.abs(s)+' 半音';}
+function pitch(slot){const s=offsets[slot];return s===0?'Original':(s>0?'+':'−')+Math.abs(s)+' st';}
 function render(){
  $('rows').replaceChildren(...voices.map(row));controls();draw();
 }
@@ -88,7 +175,7 @@ function split(id){
  const i=voices.findIndex(v=>v.id===id);if(i<0)return;
  const parent=voices[i],slot=offsets.findIndex((_,j)=>!voices.some(v=>v.slot===j));
  voices.splice(i,1,{id:nextId++,slot:parent.slot,p:parent.p/2},{id:nextId++,slot,p:parent.p/2});
- sync();render();say('一个声部分成两条，两个新声部各继承原来的一半。');
+ sync();render();say('One voice became two. Each gets half of its parent’s weight.');
 }
 function measure(){
  if(measuring||voices.length<2)return;
@@ -97,26 +184,30 @@ function measure(){
  for(const v of voices){r-=v.p;if(r<0){winner=v;break;}}
  for(const el of $('rows').children)el.classList.add(+el.dataset.id===winner.id?'chosen':'vanish');
  const previous=winner.p;
+ if(!reduced){
+  const rect=$('rows').querySelector('[data-id="'+winner.id+'"] .branch').getBoundingClientRect();
+  screenEffect('measure',rect.left+rect.width/2,rect.top+rect.height/2,colors[winner.slot]);
+ }
  setTimeout(()=>{
   voices=[{id:nextId++,slot:winner.slot,p:1}];measuring=false;
-  sync();render();say('测量留下 '+pitch(winner.slot)+'（测量前 '+(previous*100)+'%），现在恢复到 100%。');
+  sync();render();say(pitch(winner.slot)+' survived the measurement ('+(previous*100)+'% chance). It is now at 100%.');
  },reduced?0:360);
 }
 function draw(){
- const t=phase();$('position').textContent=t.toFixed(2)+' / '+duration.toFixed(2)+' 秒';
+ const t=phase();$('position').textContent=t.toFixed(2)+' / '+duration.toFixed(2)+' s';
  for(const [i,v] of voices.entries()){
   const canvas=$('rows').children[i]?.querySelector('canvas');if(!canvas)continue;
   const w=Math.max(1,Math.round(canvas.clientWidth)),h=64;
   if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h;}
   const c=canvas.getContext('2d'),p=peaks[v.slot],mid=h/2;
-  c.clearRect(0,0,w,h);c.fillStyle='#302722';c.fillRect(0,mid,w,1);
+  c.clearRect(0,0,w,h);c.fillStyle='#e3dac9';c.fillRect(0,mid,w,1);
   if(!p)continue;
   const windowSec=Math.min(duration,3.2);
   c.fillStyle=colors[v.slot];
   for(let j=0;j<w;j+=3){
    const time=(t+j/w*windowSec)%duration;
    const a=p[Math.floor(time/duration*p.length)]*52*v.p;
-   c.globalAlpha=.92-.5*j/w;c.fillRect(j,mid-a/2,1.5,a);
+   c.globalAlpha=.88-.35*j/w;c.fillRect(j,mid-a/2,1.3,a);
   }
   c.globalAlpha=1;
  }
@@ -156,10 +247,10 @@ function pitchShift(input,semitones,sr){
  return output;
 }
 async function prepare(input,sr){
- stop();busy=true;voices=[];controls();say('正在生成 '+maxVoices+' 条声轨…');
+ stop();busy=true;voices=[];controls();say('Preparing '+maxVoices+' voices…');
  await new Promise(requestAnimationFrame);
  const max=input.reduce((a,b)=>Math.max(a,Math.abs(b)),0);
- if(max<.002)throw new Error('录音里没有检测到清晰的声音，请再唱一次。');
+ if(max<.002)throw new Error('That recording was too quiet. Try singing closer to your mic.');
  const lead=Float32Array.from(input,x=>x*.78/max);
  const edge=Math.min(Math.floor(sr*.025),Math.floor(lead.length/2));
  for(let i=0;i<edge;i++){const a=i/edge;lead[i]*=a;lead[lead.length-1-i]*=a;}
@@ -181,25 +272,24 @@ async function prepare(input,sr){
    return peak;
   });
  });
- paused=0;voices=[{id:nextId++,slot:0,p:1}];busy=false;render();say(maxVoices+' 条声轨就绪。点左边的声部开始分裂。');
+ paused=0;voices=[{id:nextId++,slot:0,p:1}];busy=false;render();say(maxVoices+' voices are ready. Tap a voice to split it.');
 }
 async function sample(){
- busy=true;controls();
+ busy=true;controls();say('Loading Haha’s recording…');
  try{
-  await audio();const sr=22050,n=sr*10,x=new Float32Array(n);
-  const notes=[64,67,69,67,64,62,60,62,64,67,72,67,64,62,60,60];
-  for(let i=0;i<n;i++){
-   const beat=n/notes.length,j=Math.floor(i/beat),t=(i%beat)/sr,f=440*2**((notes[j]-69)/12);
-   const envelope=Math.min(1,t/.025,(beat/sr-t)/.09);
-   x[i]=envelope*(Math.sin(2*Math.PI*f*t)+.19*Math.sin(4*Math.PI*f*t))*.4;
-  }
-  await prepare(x,sr);
+  await audio();
+  const response=await fetch('./haha-melody.wav');
+  if(!response.ok)throw new Error('The sample could not load. Try again.');
+  const recording=await context.decodeAudioData(await response.arrayBuffer());
+  await prepare(recording.getChannelData(0),recording.sampleRate);
+  await audio();
+  started=context.currentTime;running=true;sync();controls();
  }catch(e){busy=false;controls();say(e.message);}
 }
 async function record(){
  if(recorder?.state==='recording'){recorder.stop();return;}
- if(!navigator.mediaDevices?.getUserMedia||!window.MediaRecorder){say('当前环境无法录音。请用 HTTPS 或 localhost 打开，或先试示例旋律。');return;}
- busy=true;controls();say('请允许使用麦克风。');
+ if(!navigator.mediaDevices?.getUserMedia||!window.MediaRecorder){say('Microphone recording needs HTTPS or localhost. You can still play the sample.');return;}
+ busy=true;controls();say('Allow microphone access to begin.');
  let stream;
  try{
   await audio();stream=await navigator.mediaDevices.getUserMedia({audio:true});stop();
@@ -207,29 +297,141 @@ async function record(){
   recorder.ondataavailable=e=>{if(e.data.size)chunks.push(e.data);};
   recorder.onstop=async()=>{
    clearTimeout(recordTimer);clearInterval(recordTick);stream.getTracks().forEach(t=>t.stop());
-   $('record').textContent='◉ 重新录音';$('clock').textContent='10.0 秒';controls();
+   $('record-label').textContent='SING AGAIN';$('clock').textContent='10.0 s';controls();
    try{
     const b=await context.decodeAudioData(await new Blob(chunks,{type:recorder.mimeType}).arrayBuffer());
-    const n=Math.min(b.length,Math.round(b.sampleRate*10));if(n<b.sampleRate*.2)throw new Error('录音太短，请再试一次。');
+    const n=Math.min(b.length,Math.round(b.sampleRate*10));if(n<b.sampleRate*.2)throw new Error('That take was too short. Try again.');
     const mono=new Float32Array(n);
     for(let c=0;c<b.numberOfChannels;c++){const x=b.getChannelData(c);for(let i=0;i<n;i++)mono[i]+=x[i]/b.numberOfChannels;}
     await prepare(mono,b.sampleRate);
    }catch(e){busy=false;controls();say(e.message);}
   };
-  recorder.onerror=()=>{clearTimeout(recordTimer);clearInterval(recordTick);stream.getTracks().forEach(t=>t.stop());busy=false;$('record').textContent='◉ 重新录音';controls();say('录音中断，请再试一次。');};
+  recorder.onerror=()=>{clearTimeout(recordTimer);clearInterval(recordTick);stream.getTracks().forEach(t=>t.stop());busy=false;$('record-label').textContent='SING AGAIN';controls();say('Recording stopped unexpectedly. Try again.');};
   recorder.start();controls();
-  $('record').textContent='■ 结束录音';say('录音中，十秒后自动结束。');
+  $('record-label').textContent='STOP';say('Recording. Sing for ten seconds.');
   const start=performance.now();
-  recordTick=setInterval(()=>$('clock').textContent=Math.max(0,10-(performance.now()-start)/1000).toFixed(1)+' 秒',80);
+  recordTick=setInterval(()=>$('clock').textContent=Math.max(0,10-(performance.now()-start)/1000).toFixed(1)+' s',80);
   recordTimer=setTimeout(()=>{if(recorder.state==='recording')recorder.stop();},10000);
- }catch(e){stream?.getTracks().forEach(t=>t.stop());busy=false;controls();say('无法开启麦克风，请检查浏览器权限，或先试示例旋律。');}
+ }catch(e){stream?.getTracks().forEach(t=>t.stop());busy=false;controls();say('Could not open the microphone. Check browser permissions or play the sample.');}
 }
+function encodeWav(buffer){
+ const channels=buffer.numberOfChannels,frameSize=2*channels;
+ const bytes=new ArrayBuffer(44+buffer.length*frameSize),view=new DataView(bytes);
+ const tag=(at,value)=>[...value].forEach((char,i)=>view.setUint8(at+i,char.charCodeAt(0)));
+ tag(0,'RIFF');view.setUint32(4,bytes.byteLength-8,true);tag(8,'WAVE');tag(12,'fmt ');
+ view.setUint32(16,16,true);view.setUint16(20,1,true);view.setUint16(22,channels,true);
+ view.setUint32(24,buffer.sampleRate,true);view.setUint32(28,buffer.sampleRate*frameSize,true);
+ view.setUint16(32,frameSize,true);view.setUint16(34,16,true);
+ tag(36,'data');view.setUint32(40,bytes.byteLength-44,true);
+ for(let c=0;c<channels;c++){
+  const samples=buffer.getChannelData(c);
+  for(let i=0;i<samples.length;i++){
+   const sample=Math.max(-1,Math.min(1,samples[i]));
+   view.setInt16(44+i*frameSize+c*2,Math.round(sample*(sample<0?32768:32767)),true);
+  }
+ }
+ return new Blob([bytes],{type:'audio/wav'});
+}
+$('download').onclick=async()=>{
+ try{
+  const {length,sampleRate}=buffers[voices[0].slot];
+  const offline=new OfflineAudioContext(2,length,sampleRate);
+  for(const voice of voices){
+   const source=offline.createBufferSource(),gain=offline.createGain();
+   source.buffer=buffers[voice.slot];gain.gain.value=voice.p*.88;
+   connectVoice(offline,source,gain,voice);source.start();
+  }
+  const url=URL.createObjectURL(encodeWav(await offline.startRendering()));
+  const link=document.createElement('a');link.href=url;link.download='superposingtion-harmony.wav';
+  document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),30000);
+ }catch{say('Could not export this harmony. Please try again.');}
+};
+$('share').onclick=async()=>{
+ const url=new URL('./',location.href).href;
+ if(navigator.share){
+  try{await navigator.share({title:'Superposingtion',url});return;}
+  catch(error){if(error.name==='AbortError')return;}
+ }
+ try{await navigator.clipboard.writeText(url);say('Site link copied.');}
+ catch{window.prompt('Copy the site link',url);}
+};
 $('record').onclick=record;$('sample').onclick=sample;$('measure').onclick=measure;
 $('play').onclick=async()=>{
  if(running){stop();return;}
  try{await audio();started=context.currentTime-paused;running=true;sync();controls();}
  catch(e){say(e.message);}
 };
+// Short, quiet feedback tones use the same audio context as the voices.
+async function buttonSound(button){
+ try{
+  await audio();
+  const t=context.currentTime;
+  const notes=button.id==='measure'?[550,367,275]:button.classList.contains('branch')?[440,660]:[button.id==='record'?523:620];
+  notes.forEach((frequency,i)=>{
+   const osc=context.createOscillator(),gain=context.createGain(),at=t+i*.042;
+   osc.type='sine';osc.frequency.value=frequency;
+   gain.gain.setValueAtTime(.0001,at);gain.gain.exponentialRampToValueAtTime(.035,at+.008);
+   gain.gain.exponentialRampToValueAtTime(.0001,at+.105);
+   osc.connect(gain).connect(context.destination);
+   osc.start(at);osc.stop(at+.11);
+  });
+ }catch{/* The action still works if audio feedback is unavailable. */}
+}
+// A single overlay keeps bursts above the score without intercepting input.
+function screenEffect(kind,x,y,ink){
+ const layer=$('screen-effect');
+ layer.replaceChildren();
+ const radius=Math.hypot(innerWidth,innerHeight);
+ const count=kind==='split'?2:3;
+ for(let i=0;i<count;i++){
+  const shape=document.createElement('span');
+  shape.className=kind==='split'?'screen-shape ribbon':'screen-shape';
+  shape.style.setProperty('--x',x+'px');
+  shape.style.setProperty('--y',y+'px');
+  shape.style.setProperty('--diameter',radius+'px');
+  shape.style.setProperty('--ink',i===1&&kind==='split'?'#287c6d':ink);
+  layer.append(shape);
+  const centered='translate(-50%,-50%)';
+  const direction=i===0?-1:1;
+  const frames={
+   sing:[{opacity:.42,transform:centered+' scale(.04)'},{opacity:0,transform:centered+' scale(2)'}],
+   split:[{opacity:.32,transform:centered+' rotate('+direction*29+'deg) scale(.04,.018)'},
+          {opacity:0,transform:centered+' rotate('+direction*29+'deg) scale(2.1,.16)'}],
+   measure:[{opacity:0,transform:centered+' scale(2)'},{opacity:.5,offset:.68,transform:centered+' scale(.12)'},
+            {opacity:0,transform:centered+' scale(.025)'}]
+  };
+  const animation=shape.animate(frames[kind],{duration:kind==='measure'?325:540,delay:i*48,easing:'cubic-bezier(.2,.65,.3,1)'});
+  animation.onfinish=()=>shape.remove();
+ }
+}
+document.addEventListener('click',event=>{
+ const button=event.target.closest('button');
+ if(!button||button.disabled)return;
+ void buttonSound(button);
+ if(reduced)return;
+ const rect=button.getBoundingClientRect(),x=event.detail?event.clientX:rect.left+rect.width/2,y=event.detail?event.clientY:rect.top+rect.height/2;
+ if(button.id==='record')screenEffect('sing',x,y,'#b77713');
+ if(button.classList.contains('branch')&&voices.length<maxVoices&&!measuring&&!busy){
+  screenEffect('split',x,y,button.style.getPropertyValue('--voice'));
+ }
+ for(const [dx,dy] of [[-19,-29],[25,-24],[16,15]]){
+  const spark=document.createElement('span');spark.className='ink-spark';spark.textContent='✧';spark.setAttribute('aria-hidden','true');
+  spark.style.cssText='left:'+x+'px;top:'+y+'px;--dx:'+dx+'px;--dy:'+dy+'px';
+  document.body.append(spark);spark.addEventListener('animationend',()=>spark.remove(),{once:true});
+ }
+},true);
+const cursor=$('einstein');
+let sketchReady=false;
+const sketch=new Image();
+sketch.onload=()=>{sketchReady=true;};
+sketch.src='./einstein-sketch.jpg';
+window.addEventListener('pointermove',event=>{
+ if(event.pointerType!=='mouse'||!sketchReady)return;
+ document.body.classList.add('ink-cursor');
+ cursor.style.transform='translate3d('+(event.clientX-9)+'px,'+(event.clientY-8)+'px,0)';
+});
+document.documentElement.addEventListener('pointerleave',()=>document.body.classList.remove('ink-cursor'));
+window.addEventListener('blur',()=>document.body.classList.remove('ink-cursor'));
 window.addEventListener('resize',draw);
 render();animation();
 </script></body></html>
