@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>消失的副歌</title>
-<meta name="description" content="唱一段旋律，分裂成七条和声，再用一次测量让它回到独唱。">
+<meta name="description" content="唱一段旋律，分裂成十五条声部，再用一次测量让它回到独唱。">
 <style>
 :root{color-scheme:dark;--bg:#12100f;--ink:#f4eade;--muted:#bfb0a3;--line:#453b36;--paper:#211b19;--accent:#ffbe94;font-family:system-ui,sans-serif}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink)}main{max-width:980px;margin:auto;padding:clamp(22px,5vw,62px) clamp(16px,4vw,42px)}header{border-top:1px solid var(--accent);padding-top:20px}.eyebrow{color:var(--accent);font-size:.75rem;letter-spacing:.2em}h1{font-family:Georgia,"Songti SC",serif;font-size:clamp(2.6rem,8vw,5.8rem);font-weight:500;margin:.2em 0 .12em;line-height:1.12}p{color:var(--muted);line-height:1.6;margin:.5em 0 1em}button{font:inherit;cursor:pointer;color:var(--ink);background:#29221f;border:1px solid var(--line);padding:.65em 1em;border-radius:9px}button:hover:not(:disabled){border-color:var(--accent)}button:disabled{opacity:.48;cursor:default}button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}.primary{background:var(--accent);color:#251611;border-color:transparent;font-weight:700}.bar{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin:16px 0}.meter{width:5em;font-variant-numeric:tabular-nums;color:var(--accent)}#status{min-height:1.5em;font-size:.88rem}.board{border:1px solid var(--line);border-radius:16px;background:var(--paper);overflow:hidden}.board-top,.board-bottom{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;padding:12px 16px;font-size:.8rem;letter-spacing:.06em;color:var(--muted)}.board-top{border-bottom:1px solid var(--line)}.board-bottom{border-top:1px solid var(--line)}.row{display:grid;grid-template-columns:clamp(95px,20vw,155px) minmax(0,1fr);align-items:center;min-height:65px;border-bottom:1px solid #332a27;transition:opacity .35s,transform .35s}.row:last-child{border-bottom:0}.branch{display:grid;grid-template-columns:54px 1fr;align-items:center;text-align:left;padding:4px 6px;min-height:60px;background:transparent;border-color:transparent;gap:4px}.dot{width:var(--size);height:var(--size);display:block;background:var(--voice);border-radius:50%;justify-self:center;box-shadow:0 0 18px color-mix(in srgb,var(--voice),transparent 76%)}.tag{font-variant-numeric:tabular-nums;font-weight:700;font-size:.83rem}.pitch{display:block;font-size:.67rem;font-weight:400;color:var(--muted)}canvas{width:100%;height:64px;display:block;border-left:1px solid var(--line)}.vanish{opacity:0;transform:scale(.74)}.chosen{background:#382b24;transform:scale(1.015)}.reveal{animation:appear .35s ease-out}@keyframes appear{from{opacity:.2;transform:scale(.96)}to{opacity:1;transform:none}}.note{font-size:.85rem;max-width:68ch;margin-top:20px}dialog{max-width:min(360px,90vw);background:var(--paper);color:var(--ink);border:1px solid var(--line);border-radius:14px;padding:20px}dialog::backdrop{background:#0009}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink)}main{max-width:980px;margin:auto;padding:clamp(22px,5vw,62px) clamp(16px,4vw,42px)}header{border-top:1px solid var(--accent);padding-top:20px}.eyebrow{color:var(--accent);font-size:.75rem;letter-spacing:.2em}h1{font-family:Georgia,"Songti SC",serif;font-size:clamp(2.6rem,8vw,5.8rem);font-weight:500;margin:.2em 0 .12em;line-height:1.12}p{color:var(--muted);line-height:1.6;margin:.5em 0 1em}button{font:inherit;cursor:pointer;color:var(--ink);background:#29221f;border:1px solid var(--line);padding:.65em 1em;border-radius:9px}button:hover:not(:disabled){border-color:var(--accent)}button:disabled{opacity:.48;cursor:default}button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}.primary{background:var(--accent);color:#251611;border-color:transparent;font-weight:700}.bar{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin:16px 0}.meter{width:5em;font-variant-numeric:tabular-nums;color:var(--accent)}#status{min-height:1.5em;font-size:.88rem}.board{border:1px solid var(--line);border-radius:16px;background:var(--paper);overflow:hidden}.board-top,.board-bottom{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;padding:12px 16px;font-size:.8rem;letter-spacing:.06em;color:var(--muted)}.board-top{border-bottom:1px solid var(--line)}.board-bottom{border-top:1px solid var(--line)}#rows{max-height:min(55vh,530px);overflow-y:auto}.row{display:grid;grid-template-columns:clamp(95px,20vw,155px) minmax(0,1fr);align-items:center;min-height:65px;border-bottom:1px solid #332a27;transition:opacity .35s,transform .35s}.row:last-child{border-bottom:0}.branch{display:grid;grid-template-columns:54px 1fr;align-items:center;text-align:left;padding:4px 6px;min-height:60px;background:transparent;border-color:transparent;gap:4px}.dot{width:var(--size);height:var(--size);display:block;background:var(--voice);border-radius:50%;justify-self:center;box-shadow:0 0 18px color-mix(in srgb,var(--voice),transparent 76%)}.tag{font-variant-numeric:tabular-nums;font-weight:700;font-size:.83rem}.pitch{display:block;font-size:.67rem;font-weight:400;color:var(--muted)}canvas{width:100%;height:64px;display:block;border-left:1px solid var(--line)}.vanish{opacity:0;transform:scale(.74)}.chosen{background:#382b24;transform:scale(1.015)}.reveal{animation:appear .35s ease-out}@keyframes appear{from{opacity:.2;transform:scale(.96)}to{opacity:1;transform:none}}.note{font-size:.85rem;max-width:68ch;margin-top:20px}dialog{max-width:min(360px,90vw);background:var(--paper);color:var(--ink);border:1px solid var(--line);border-radius:14px;padding:20px}dialog::backdrop{background:#0009}
 @media(prefers-reduced-motion:reduce){.row{transition:none}.reveal{animation:none}}
 </style>
 </head>
@@ -14,14 +14,16 @@
 <header><div class="eyebrow">VOICE LAB / 01</div><h1>消失的副歌</h1><p>唱十秒。让一条旋律分成和声，再看看测量会留下谁。</p></header>
 <div class="bar"><button class="primary" id="record">◉ 开始录音</button><button id="sample">试用示例旋律</button><span class="meter" id="clock">10.0 秒</span></div>
 <p role="status" id="status">录音只在当前浏览器内处理。</p>
-<section class="board" aria-label="声部工作区"><div class="board-top"><span>声部 · 点击分裂</span><span id="count">0 / 7 轨</span><button id="measure" disabled>Measurement · 测量</button></div><div id="rows"></div><div class="board-bottom"><button id="play" disabled>▶ 循环播放</button><span id="position">0.00 / 10.00 秒</span></div></section>
+<section class="board" aria-label="声部工作区"><div class="board-top"><span>声部 · 点击分裂</span><span id="count">0 / 15 轨</span><button id="measure" disabled>Measurement · 测量</button></div><div id="rows"></div><div class="board-bottom"><button id="play" disabled>▶ 循环播放</button><span id="position">0.00 / 10.00 秒</span></div></section>
 <p class="note">每次分裂把权重和音量增益各平分。测量按权重随机保留一轨，并将它恢复到 100%。这是叠加与测量的声音类比。声部实际同时播放，音量和百分比也不能直接等同于真实量子系统的振幅与概率。</p>
-</main><dialog id="limit"><strong>最多支持 7 个声部</strong><p>可以先测量，让它回到一个声部，再重新分裂。</p><form method="dialog"><button autofocus>知道了</button></form></dialog>
+</main><dialog id="limit"><strong>最多支持 15 个声部</strong><p>可以先测量，让它回到一个声部，再重新分裂。</p><form method="dialog"><button autofocus>知道了</button></form></dialog>
 <script>
 'use strict';
 const $=id=>document.getElementById(id);
-const offsets=[0,-5,3,-2,5,-10,9];
-const colors=['#ffbb91','#8edac8','#c3adff','#f3d577','#f5a1bd','#8abaff','#d6e591'];
+// Establish a minor triad first, then add color tones and wider registers.
+const offsets=[0,3,-5,7,-2,-9,2,-10,10,-7,5,-14,14,15,-17];
+const maxVoices=offsets.length;
+const colors=['#ffbb91','#8edac8','#c3adff','#f3d577','#f5a1bd','#8abaff','#d6e591','#f19a78','#73b6f6','#df94e7','#a8d88c','#d9a86e','#6dc5b5','#c0a4ed','#f4d4a4'];
 const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
 let context,buffers=[],peaks=[],voices=[],running=false,busy=false,measuring=false,started=0,paused=0,duration=10,active=new Map(),nextId=0;
 let recorder,recordTimer,recordTick;
@@ -33,7 +35,7 @@ function controls(){
  $('measure').disabled=busy||voices.length<2||measuring;
  $('record').disabled=(busy&&recorder?.state!=='recording')||measuring;
  $('sample').disabled=busy||measuring;
- $('count').textContent=voices.length+' / 7 轨';
+ $('count').textContent=voices.length+' / '+maxVoices+' 轨';
  $('play').textContent=running?'❚❚ 暂停':'▶ 循环播放';
 }
 function stopVoice(v,t){
@@ -51,7 +53,12 @@ function sync(){
   const source=context.createBufferSource(),gain=context.createGain();
   source.buffer=buffers[v.slot];source.loop=true;
   gain.gain.setValueAtTime(0,t);gain.gain.linearRampToValueAtTime(v.p*.88,t+.025);
-  source.connect(gain).connect(context.destination);
+  source.connect(gain);
+  if(context.createStereoPanner){
+   const panner=context.createStereoPanner(),semitones=offsets[v.slot];
+   panner.pan.value=Math.sign(semitones)*Math.min(.48,Math.abs(semitones)*.032);
+   gain.connect(panner).connect(context.destination);
+  }else gain.connect(context.destination);
   source.start(t,phase(t));active.set(v.id,{source,gain});
  }
 }
@@ -77,7 +84,7 @@ function render(){
 }
 function split(id){
  if(busy||measuring)return;
- if(voices.length>=7){$('limit').showModal();return;}
+ if(voices.length>=maxVoices){$('limit').showModal();return;}
  const i=voices.findIndex(v=>v.id===id);if(i<0)return;
  const parent=voices[i],slot=offsets.findIndex((_,j)=>!voices.some(v=>v.slot===j));
  voices.splice(i,1,{id:nextId++,slot:parent.slot,p:parent.p/2},{id:nextId++,slot,p:parent.p/2});
@@ -149,7 +156,7 @@ function pitchShift(input,semitones,sr){
  return output;
 }
 async function prepare(input,sr){
- stop();busy=true;voices=[];controls();say('正在生成七条声轨…');
+ stop();busy=true;voices=[];controls();say('正在生成 '+maxVoices+' 条声轨…');
  await new Promise(requestAnimationFrame);
  const max=input.reduce((a,b)=>Math.max(a,Math.abs(b)),0);
  if(max<.002)throw new Error('录音里没有检测到清晰的声音，请再唱一次。');
@@ -157,13 +164,16 @@ async function prepare(input,sr){
  const edge=Math.min(Math.floor(sr*.025),Math.floor(lead.length/2));
  for(let i=0;i<edge;i++){const a=i/edge;lead[i]*=a;lead[lead.length-1-i]*=a;}
  duration=lead.length/sr;
- buffers=offsets.map(s=>{
+ const prepared=[];
+ for(const s of offsets){
   const data=pitchShift(lead,s,sr);
   for(let i=0;i<edge;i++){const a=i/edge;data[i]*=a;data[data.length-1-i]*=a;}
   const peak=data.reduce((a,b)=>Math.max(a,Math.abs(b)),0);
   if(peak>.84)for(let i=0;i<data.length;i++)data[i]*=.84/peak;
-  const b=context.createBuffer(1,data.length,sr);b.copyToChannel(data,0);return b;
- });
+  const b=context.createBuffer(1,data.length,sr);b.copyToChannel(data,0);prepared.push(b);
+  await new Promise(requestAnimationFrame);
+ }
+ buffers=prepared;
  peaks=buffers.map(b=>{
   const data=b.getChannelData(0);
   return Float32Array.from({length:1000},(_,i)=>{
@@ -171,7 +181,7 @@ async function prepare(input,sr){
    return peak;
   });
  });
- paused=0;voices=[{id:nextId++,slot:0,p:1}];busy=false;render();say('七条声轨就绪。点左边的声部开始分裂。');
+ paused=0;voices=[{id:nextId++,slot:0,p:1}];busy=false;render();say(maxVoices+' 条声轨就绪。点左边的声部开始分裂。');
 }
 async function sample(){
  busy=true;controls();
