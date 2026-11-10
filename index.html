@@ -86,7 +86,8 @@ button{font-size:1.22rem;font-weight:650}
 @media(prefers-reduced-motion:reduce){.branch[data-hint],#measure[data-hint]{animation:none}}
 #measure-hint{color:#754610}
 .board-bottom{flex-wrap:wrap}
-.sing-word{color:inherit;background:linear-gradient(transparent 45%,#ffdf78 45% 88%,transparent 88%);padding:0 .025em}
+.sing-word{position:relative;color:inherit;background:none}
+.sing-word::after{content:"";position:absolute;z-index:-1;inset:auto .05em .17em .07em;height:.16em;background:#ffc959;border-radius:45% 24% 42% 20%;transform:rotate(-3deg)}
 .story{margin-top:2.5rem;font-size:1.25rem;line-height:1.45}
 .story h2,.story h3{line-height:1.15;margin:1.2em 0 .3em}
 .story p{margin:.35em 0 1em}
